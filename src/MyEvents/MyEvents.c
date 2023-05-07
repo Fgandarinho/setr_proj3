@@ -1,5 +1,10 @@
 #include "MyEvents.h"
 
+/**
+ * /autor
+ * /date
+ * /bugs: 
+*/
 
 /**
 *função invovado pela ISR do Botão_0

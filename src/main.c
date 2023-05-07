@@ -4,7 +4,7 @@
 /**
  * Módulos usados pelo main
 */
-#include "MyEvents/MyEvents.h"
+#include "MyEvents/MyEvents.h"		/*para o MyEvents Module*/
 #include <zephyr/sys/printk.h>		/*para printk*/
 
 /**
@@ -18,7 +18,6 @@
 *Atenção: esta função após inicializar entre em loop infinito
 */
 void initStateMachine(void);
-
 
 
  /* 
