@@ -4,11 +4,12 @@
 
 void alocListMovies(void)
 {
-    for(int i=0; i<=5; i++)
+
+    for(int i=0; i<=NUM_MAX_FILMES; i++)
     {
-       //listaFilmes[i].nomeFilme= k_malloc(20);
-       //listaFilmes[i].sessionTime= k_malloc(10);
-       //listaFilmes[i].price=0;    
+       listaFilmes[i].nomeFilme= k_malloc(20);
+       listaFilmes[i].sessionTime= k_malloc(10);
+       listaFilmes[i].price=0;    
     }
 
 }

@@ -66,7 +66,9 @@ void main(void)
 	//printk("o credito acolmulado e: %d", ret);
 	alocListMovies();
 	creatListMovies();
-	printk("preço do filme %d", listaFilmes[3].price);
+
+	ret=listaFilmes[1].price;
+	printk("preço do filme %d",ret);
 
 	initStateMachine();
 	
