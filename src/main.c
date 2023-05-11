@@ -1,4 +1,5 @@
 #include "MyEvents/MyEvents.h"
+#include "MyMovies/MyMovies.h"
 
 /**
  * Nomes dos estados da a implementaÃ§Ã£o da maquina de estado 
@@ -6,6 +7,7 @@
 #define showMovie 1
 #define buyMovie 2
 #define notByMovie 3
+
 
 
 /**
@@ -56,8 +58,15 @@ void initStateMachine(void)
  */
 void main(void)
 {
+	int ret;
 	/*Inicializar os devices*/
 	initDevicesIO();
+
+	//ret=credito(&creditoAcomulado, 1,0);
+	//printk("o credito acolmulado e: %d", ret);
+	alocListMovies();
+	creatListMovies();
+	printk("preço do filme %d", listaFilmes[3].price);
 
 	initStateMachine();
 	

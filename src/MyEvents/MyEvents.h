@@ -11,6 +11,9 @@
 /* Use a "big" sleep time to reduce CPU load (button detection int activated, not polled) */
 #define SLEEP_TIME_MS   60*1000 
 
+/*Variaveis globais módulo  */
+static int creditoAcomulado = 0;
+
 /* Set the pins used for LED and buttons */
 /* LED 1 and buttons 1-4 are the ones on board */
 /* buttons 5-8 are connected to pins labeled A0 ... A3 (gpio0 pins 3,4,28,29) */
@@ -27,10 +30,21 @@ static const struct device * gpio0_dev = DEVICE_DT_GET(GPIO0_NODE);
 *  It defines e.g. which pin triggers the callback and the address of the function */
 static struct gpio_callback button_cb_data;
 
+
+
 void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
 
 void initDevicesIO(void);
 
 void testLeds(void);
+
+/**
+ * Função que atualiza o crédito disponivel
+ * Inputs: 
+ *  crd_acomulado -> ponteiro pra a zona de memoria onde está guardada o plafaudo
+ *  in_crd -> crédito a tratar dentro da função(1€;2€;5€;10)
+ *  add_sub -> operação a realizar: 0-> mostra crédito ; 1-> Adiciona crédito(in_crd); 2-> remove_credito(in_crd); 3->remove_ALLcredito
+*/
+int credito(int *crd_acomulado, int in_crd, int add_sub);
 
 #endif

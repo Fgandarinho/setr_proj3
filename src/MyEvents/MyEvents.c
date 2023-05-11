@@ -5,6 +5,10 @@
  * /date
  * /bugs: 
 */
+
+
+
+
 /* Define a callback function. It is like an ISR (and runs in the cotext of an ISR) */
 /* that is called when the button is pressed */
 void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
@@ -15,23 +19,56 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
 	gpio_pin_toggle(gpio0_dev,LED1_PIN);
 
 	/* Identify the button(s) that was(ere) hit*/
-	for(i=0; i<sizeof(buttons_pins); i++){		
-		if(BIT(buttons_pins[i]) & pins) {
+/*	for(i=0; i<sizeof(buttons_pins); i++)
+	{			
+		if(BIT(buttons_pins[i]) & pins) 
+		{
 			printk("Button %d pressed\n\r",i+1);
 		}
-	} 
+	}
+*/
+	if(BIT(buttons_pins[0]) & pins) 
+	{
+		int ret;
+		printk("Inserido 1_EURO\n");
+		ret = credito(&creditoAcomulado, 1, 1);
+		printk(" ----------------------> Tem: %d \n",ret);
+
+	}
+
+	if(BIT(buttons_pins[1]) & pins) 
+	{
+		int ret;
+		printk(" Inserido 2_EUROS\n");
+		ret = credito(&creditoAcomulado, 2, 1);
+		printk(" ----------------------> Tem: %d \n",ret);
+
+	}
+
+	if(BIT(buttons_pins[2]) & pins) 
+	{
+		int ret;
+		printk("Inserido 5_EUROS\n");
+		ret = credito(&creditoAcomulado, 5, 1);
+		printk(" ----------------------> Tem: %d \n",ret);
+
+	}
+	if(BIT(buttons_pins[3]) & pins) 
+	{
+		int ret;
+		printk("Inserido 10_EUROS\n");
+		ret = credito(&creditoAcomulado, 10, 1);
+		printk(" ----------------------> Tem: %d \n",ret);
+
+	}
 }
 
 void initDevicesIO(void)
 {
-	printk("-------> passei por aqui!! \n\r");
+	printk("-------> A inicializar devices\n\r");
 	int ret, i;
 	uint32_t pinmask = 0; /* Mask for setting the pins that shall generate interrupts */
 	
-	/* Welcome message */
-	printk("Digital IO accessing IO pins not set via DT (external buttons in the case) \n\r");
-	printk("Hit buttons 1-8 (1...4 internal, 5-8 external connected to A0...A3). Led toggles and button ID printed at console \n\r");
-
 	/* Check if gpio0 device is ready */
 	if (!device_is_ready(gpio0_dev)) {
 		printk("Error: gpio0 device is not ready\n");
@@ -85,4 +122,37 @@ void initDevicesIO(void)
 void testLeds(void)
 {
     gpio_pin_toggle(gpio0_dev,LED1_PIN);
+}
+
+
+int credito(int *crd_acomulado, int in_crd, int add_sub)
+{
+	int ret;
+
+	if(add_sub==0) 						/*mostra o crédito exixtente*/
+	{
+		ret=*crd_acomulado;	
+	}
+	if(add_sub==1)
+	{
+		*crd_acomulado=*crd_acomulado + in_crd;
+		ret= *crd_acomulado;
+	}
+
+	if(add_sub==2 && *crd_acomulado>=in_crd)
+	{
+		*crd_acomulado=*crd_acomulado - in_crd;
+		ret= *crd_acomulado;
+	}
+
+	if(add_sub==3)
+	{
+		*crd_acomulado=0;
+		ret= *crd_acomulado;
+	}
+
+
+	return ret;
+
+
 }
