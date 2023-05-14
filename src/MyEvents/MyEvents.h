@@ -11,8 +11,20 @@
 /* Use a "big" sleep time to reduce CPU load (button detection int activated, not polled) */
 #define SLEEP_TIME_MS   60*1000 
 
-/*Variaveis globais módulo  */
-static int creditoAcomulado = 0;
+/*Flags que sinalização quando os botões são pressonados*/
+/*IMPORTANTE: é da responsabilidade do leitor da flag voltar a coloca-la a false*/
+
+struct botao
+{
+    bool _up;
+    bool _dw; 
+    bool _sel;
+    bool _ret;
+    bool _1E;
+    bool _2E;
+    bool _5E;
+    bool _10E;
+};
 
 /* Set the pins used for LED and buttons */
 /* LED 1 and buttons 1-4 are the ones on board */
@@ -43,8 +55,14 @@ void testLeds(void);
  * Inputs: 
  *  crd_acomulado -> ponteiro pra a zona de memoria onde está guardada o plafaudo
  *  in_crd -> crédito a tratar dentro da função(1€;2€;5€;10)
- *  add_sub -> operação a realizar: 0-> mostra crédito ; 1-> Adiciona crédito(in_crd); 2-> remove_credito(in_crd); 3->remove_ALLcredito
+ *  add_sub -> operação a realizar: 0-> mostra crédito ; 1-> Adiciona crédito(in_crd); 2-> subtrai_credito(in_crd); 3->remove_ALLcredito
 */
 int credito(int *crd_acomulado, int in_crd, int add_sub);
+
+/*Função que lê nao estado de todas as flags dos botões*/
+struct botao readBot();
+
+/*Função que atualiza a flag de um botão */
+void writeBot(struct botao bt);
 
 #endif

@@ -6,7 +6,8 @@
  * /bugs: 
 */
 
-
+/*estrutura para passar o estado de todos os botões*/
+static struct botao bot;
 
 
 /* Define a callback function. It is like an ISR (and runs in the cotext of an ISR) */
@@ -18,7 +19,7 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
     /* Toggle led1 */
 	gpio_pin_toggle(gpio0_dev,LED1_PIN);
 
-	/* Identify the button(s) that was(ere) hit*/
+	/* Identify the button(s) that was(ere) hit-> Feito pelo PROF.*/
 /*	for(i=0; i<sizeof(buttons_pins); i++)
 	{			
 		if(BIT(buttons_pins[i]) & pins) 
@@ -29,38 +30,54 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
 */
 	if(BIT(buttons_pins[0]) & pins) 
 	{
-		int ret;
-		printk("Inserido 1_EURO\n");
-		ret = credito(&creditoAcomulado, 1, 1);
-		printk(" ----------------------> Tem: %d \n",ret);
-
+		printk("Botão 1_EUROS\n");
+		bot._1E=true;
+		
 	}
 
 	if(BIT(buttons_pins[1]) & pins) 
 	{
-		int ret;
-		printk(" Inserido 2_EUROS\n");
-		ret = credito(&creditoAcomulado, 2, 1);
-		printk(" ----------------------> Tem: %d \n",ret);
-
+		printk("Botão 2_EUROS\n");
+		bot._2E=true;
 	}
 
 	if(BIT(buttons_pins[2]) & pins) 
 	{
-		int ret;
-		printk("Inserido 5_EUROS\n");
-		ret = credito(&creditoAcomulado, 5, 1);
-		printk(" ----------------------> Tem: %d \n",ret);
-
+		printk("Botão 5_EUROS\n");
+		bot._5E=true;
 	}
+
 	if(BIT(buttons_pins[3]) & pins) 
 	{
-		int ret;
-		printk("Inserido 10_EUROS\n");
-		ret = credito(&creditoAcomulado, 10, 1);
-		printk(" ----------------------> Tem: %d \n",ret);
-
+		printk("Botão 10_EUROS\n");
+		bot._10E=true;
 	}
+
+	if(BIT(buttons_pins[4]) & pins) 
+	{
+		printk("Botão UP\n");
+		bot._up=true;
+		
+	}
+
+	if(BIT(buttons_pins[5]) & pins) 
+	{
+		printk("Botão DOWN\n");
+		bot._dw=true;
+	}
+
+	if(BIT(buttons_pins[6]) & pins) 
+	{
+		printk("Botão SELECT\n");
+		bot._sel=true;
+	}
+
+	if(BIT(buttons_pins[7]) & pins) 
+	{
+		printk("Botão RETURN\n");
+		bot._ret=true;
+	}
+
 }
 
 void initDevicesIO(void)
@@ -119,12 +136,13 @@ void initDevicesIO(void)
 
 }
 
+/*testa LEDS -> TOGGLE*/
 void testLeds(void)
 {
     gpio_pin_toggle(gpio0_dev,LED1_PIN);
 }
 
-
+/*gere o crédito*/
 int credito(int *crd_acomulado, int in_crd, int add_sub)
 {
 	int ret;
@@ -150,9 +168,36 @@ int credito(int *crd_acomulado, int in_crd, int add_sub)
 		*crd_acomulado=0;
 		ret= *crd_acomulado;
 	}
-
-
 	return ret;
+}
+/*Lê a estruura loca das flags dos botes*/
+struct botao readBot()
+{
+	struct botao ret_botoes;
 
+	ret_botoes._1E = bot._1E;
+	ret_botoes._2E = bot._2E;
+	ret_botoes._5E = bot._5E;
+	ret_botoes._10E = bot._10E;
+	ret_botoes._up = bot._up;
+	ret_botoes._dw = bot._dw;
+	ret_botoes._sel = bot._sel;
+	ret_botoes._ret = bot._ret;
 
+	return ret_botoes;
+}
+
+/*escreve e atuliza a estrutura local com as flags de todos os botoes*/
+void writeBot(struct botao bt)
+{
+	bot._1E = bt._1E;
+	bot._2E = bt._2E;
+	bot._5E = bt._5E;
+	bot._10E = bt._10E;
+	bot._up = bt._up;
+	bot._dw = bt._dw;
+	bot._sel = bt._sel;
+	bot._ret = bt._ret;
+
+	
 }

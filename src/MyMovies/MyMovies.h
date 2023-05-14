@@ -13,13 +13,16 @@ struct filme
     int price;
 };
 
-/*cria um array estático para uma estrutura de filmes*/
-static struct filme listaFilmes[NUM_MAX_FILMES];
 
-/*cria a lista de filmes consoante o guião de trabalho*/
-void alocListMovies(void);
+/*aloca espaço no uC para armazenar as informações do filme*/
+void alocListMovies();
 
-void creatListMovies(void);
+/*cria/insere os filmes consoante os dados do guiao de trabalho*/
+void creatListMovies();
+
+/*devolve as informações do filme selecionado*/
+/*struct filme showFilme(int num_filme, struct filme *lista);*/
+struct filme showFilme(int num_filme);
 
 
 #endif
