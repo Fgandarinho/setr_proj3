@@ -1,9 +1,9 @@
 #include "MyEvents.h"
 
 /**
- * /autor
- * /date
- * /bugs: 
+ * /autor: Fernando & Tomás
+ * /date:
+ * /bugs: no BUgs
 */
 
 /*estrutura para passar o estado de todos os botões*/
@@ -30,56 +30,57 @@ void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t
 */
 	if(BIT(buttons_pins[0]) & pins) 
 	{
-		printk("Botão 1_EUROS\n");
+		printk("................................................... Botão 1_EUROS\n");
 		bot._1E=true;
 		
 	}
 
 	if(BIT(buttons_pins[1]) & pins) 
 	{
-		printk("Botão 2_EUROS\n");
+		printk("................................................... Botão 2_EUROS\n");
 		bot._2E=true;
 	}
 
 	if(BIT(buttons_pins[2]) & pins) 
 	{
-		printk("Botão 5_EUROS\n");
+		printk("................................................... Botão 5_EUROS\n");
 		bot._5E=true;
 	}
 
 	if(BIT(buttons_pins[3]) & pins) 
 	{
-		printk("Botão 10_EUROS\n");
+		printk("................................................... Botão 10_EUROS\n");
 		bot._10E=true;
 	}
 
 	if(BIT(buttons_pins[4]) & pins) 
 	{
-		printk("Botão UP\n");
+		printk("................................................... Botão UP\n");
 		bot._up=true;
 		
 	}
 
 	if(BIT(buttons_pins[5]) & pins) 
 	{
-		printk("Botão DOWN\n");
+		printk("................................................... Botão DOWN\n");
 		bot._dw=true;
 	}
 
 	if(BIT(buttons_pins[6]) & pins) 
 	{
-		printk("Botão SELECT\n");
+		printk("................................................... Botão SELECT\n");
 		bot._sel=true;
 	}
 
 	if(BIT(buttons_pins[7]) & pins) 
 	{
-		printk("Botão RETURN\n");
+		printk("................................................... Botão RETURN\n");
 		bot._ret=true;
 	}
 
 }
 
+/*inicializa os devices*/
 void initDevicesIO(void)
 {
 	printk("-------> A inicializar devices\n\r");
@@ -170,7 +171,9 @@ int credito(int *crd_acomulado, int in_crd, int add_sub)
 	}
 	return ret;
 }
-/*Lê a estruura loca das flags dos botes*/
+/**
+ * Lê a estruura loca das flags dos botes
+ * Esta função faz a atualização dos valores do Events.c para fora(main.c)*/
 struct botao readBot()
 {
 	struct botao ret_botoes;
@@ -187,7 +190,9 @@ struct botao readBot()
 	return ret_botoes;
 }
 
-/*escreve e atuliza a estrutura local com as flags de todos os botoes*/
+/**
+ * escreve e atuliza a estrutura local com as flags de todos os botoes
+ * Esta função faz a atualização dos valores do main.c para dentro(MyEvents.c)*/
 void writeBot(struct botao bt)
 {
 	bot._1E = bt._1E;

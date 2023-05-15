@@ -11,9 +11,8 @@
 /* Use a "big" sleep time to reduce CPU load (button detection int activated, not polled) */
 #define SLEEP_TIME_MS   60*1000 
 
-/*Flags que sinalização quando os botões são pressonados*/
+/*Flags que sinalização quando os botões são pressionados*/
 /*IMPORTANTE: é da responsabilidade do leitor da flag voltar a coloca-la a false*/
-
 struct botao
 {
     bool _up;
@@ -43,11 +42,17 @@ static const struct device * gpio0_dev = DEVICE_DT_GET(GPIO0_NODE);
 static struct gpio_callback button_cb_data;
 
 
-
+/**
+ * Função que vai registar por ISR em flags os botões presionados
+ * 
+*/
 void button_pressed(const struct device *dev, struct gpio_callback *cb, uint32_t pins);
 
+
+/*inicializa os devices Hardware*/
 void initDevicesIO(void);
 
+/*Função que testa o LED da placa*/
 void testLeds(void);
 
 /**
@@ -59,10 +64,14 @@ void testLeds(void);
 */
 int credito(int *crd_acomulado, int in_crd, int add_sub);
 
-/*Função que lê nao estado de todas as flags dos botões*/
+/**
+ * Lê a estrura local das flags dos botes
+ * Esta função faz a atualização dos valores do Events.c para fora(main.c)*/
 struct botao readBot();
 
-/*Função que atualiza a flag de um botão */
+/**
+ * escreve e atuliza a estrutura local com as flags de todos os botoes
+ * Esta função faz a atualização dos valores do main.c para dentro(MyEvents.c)*/
 void writeBot(struct botao bt);
 
 #endif

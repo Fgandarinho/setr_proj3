@@ -58,6 +58,7 @@ void creatListMovies()
  * parametro de saida é do tipo estrutura de filme
  * parametro de entrada indici do filme a procurar
  * ponteiro para a estrutura da lista de filmes
+ * Esta Função faz a interface/comunicaçao entre o modulo main.c e MyMovies.c
 */
 struct filme showFilme(int num_filme)
 {

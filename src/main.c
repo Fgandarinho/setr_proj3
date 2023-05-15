@@ -3,6 +3,7 @@
 
 /* Use a "big" sleep time to reduce CPU load (button detection int activated, not polled) */
 #define SLEEP_TIME_MS   60*1000 
+#define REFRESH_TIME_SM_MS 500
 
 /**
  * Nomes dos estados da a implementaÃ§Ã£o da maquina de estado 
@@ -13,11 +14,11 @@
 
 
 
-struct filme ret_filme;								/*cria uma variavel do tipo filme para retorno das funções das funções de MyMovies*/
-struct botao ret_bota;								/*cria uma variavel do tipo botao para retrono das  funções de MyEventes*/
+struct filme ret_filme;						/*cria uma variavel do tipo filme para retorno das funções das funções de MyMovies*/
+struct botao ret_bota;						/*cria uma variavel do tipo botao para retrono das  funções de MyEventes*/
 
-static int creditoAcomulado = 0;
-static int currentMovie = 1;
+static int creditoAcomulado = 0;			/*variavel que contem o credito acomulado*/		
+static int currentMovie = 1;				/*variavel que sinaliza o indice do fime selecionado*/
 
 static bool state_showMovie= true;			/* flags usadas na maquina de estado para que no ciclo infinito o terminal não esteja sempre a printK();*/
 static bool state_buyMovie= false;
@@ -26,16 +27,18 @@ static bool state_notByMovie= false;
 
 /**
  * FunÃ§Ã£o que implementa a mÃ¡quina de estados do projeto "mÃ¡quina de venda de filmes"
+ * Inicialização da máquina de estados 
+ * Atenção entra em ciclo infinito
  * 
 */
 void initStateMachine(void)
 {
-	int state = showMovie; 				//estado inicial
-	int rtrn=0;							//variavel usada para o retorno das funções	
+	int state = showMovie; 					//estado inicial
+	int rtrn=0;								//variavel usada para o retorno das funções	
 	
-	while(1)							//MÃ¡quina de estado em loop infinito!!!!	
+	while(1)								//MÃ¡quina de estado em loop infinito!!!!	
 	{
-		ret_bota = readBot();	//lê e actualiza o estado do botões
+		ret_bota = readBot();				//lê e actualiza o estado do botões
 		switch(state)
 		{	/*######################## ESTADO 1 ######################*/
 			case showMovie:	
@@ -43,13 +46,13 @@ void initStateMachine(void)
 					/* ###### ACTIVIDADES DESTE ESTADO ####### */
 				if(state_showMovie==true)
 				{
-					ret_filme = showFilme(currentMovie); //mostra o filme selecionado
+					ret_filme = showFilme(currentMovie); 		//mostra o filme selecionado
 					printk("%s, com sessão às : %s, e custa %d EUROS\n",ret_filme.nomeFilme, ret_filme.sessionTime, ret_filme.price);
 					
-					rtrn=credito(&creditoAcomulado,0,0); //Mostra o crédito atual
+					rtrn=credito(&creditoAcomulado,0,0); 		//Mostra o crédito atual
 					printk("O credito acolmulado e: %d \n", rtrn);
 
-					state_showMovie=false;					//flags para so realizar este código 1x!!!!		
+					state_showMovie=false;						//flags para so realizar este código 1x!!!!		
 					state_buyMovie=true;
 					state_notByMovie=true;
 				}
@@ -57,92 +60,61 @@ void initStateMachine(void)
 							/*########## CONDIÇOES/EVENTOS para SALTAR de estado ################*/
 				if(ret_bota._up==true)									// verificar o botão_up se foi pressionado
 				{
-					state=showMovie;						//next_state -> showMovie
-					if(currentMovie <= (NUM_MAX_FILMES-1))	/*-1 pois o array conta com o valor 0-4 -> NUM_MAX_FILMES=5*/	
+					state=showMovie;									//next_state -> showMovie
+					if(currentMovie < NUM_MAX_FILMES-1)				/*-1 pois o array conta com o valor 0-4 -> NUM_MAX_FILMES=5*/	
 					{
-						currentMovie++;						/*incrementa para o proximo filme*/
+						currentMovie++;									/*incrementa para o proximo filme*/
 					}else
 						{
-							currentMovie=0;					/*se o indice dos filmes atingir o máximo a lista deve reeniciar*/					
+							currentMovie=0;								/*se o indice dos filmes atingir o máximo a lista deve reeniciar*/					
 						}
-					state_showMovie=true;					//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
-					ret_bota._up=false;					    //volta a colocar a sinalização do botão UP a false	
+					state_showMovie=true;								//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
+					ret_bota._up=false;								    //volta a colocar a sinalização do botão UP a false	
 				}
 
 				if(ret_bota._dw==true)									// verificar o botão_up se foi pressionado
 				{
-					state=showMovie;						//next_state -> showMovie
-					if(currentMovie >0)	/*-1 pois o array conta com o valor 0-4 -> NUM_MAX_FILMES=5*/	
+					state=showMovie;									//next_state -> showMovie
+					if(currentMovie >0)									/*-1 pois o array conta com o valor 0-4 -> NUM_MAX_FILMES=5*/	
 					{
-						currentMovie--;						/*incrementa para o proximo filme*/
+						currentMovie--;									/*incrementa para o proximo filme*/
 					}else{
-							currentMovie=NUM_MAX_FILMES-1;					/*se o indice dos filmes atingir o máximo a lista deve reeniciar*/					
+							currentMovie=NUM_MAX_FILMES-1;				/*se o indice dos filmes atingir o máximo a lista deve reeniciar*/					
 						}
-					state_showMovie=true;					//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
-					ret_bota._dw=false;					    //volta a colocar a sinalização do botão UP a false	
+					state_showMovie=true;								//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
+					ret_bota._dw=false;					    			//volta a colocar a sinalização do botão UP a false	
 				}
 
-				if(ret_bota._ret==true && creditoAcomulado>0)
+				if(ret_bota._ret==true && creditoAcomulado>0)			//Se botão return é pressionado e existe crédito	
 				{
 					int ret;
-					state=showMovie;						//next_state -> showMovie
-					ret= credito(&creditoAcomulado,0,0); 	//Lê o credito presente
-					printk(" ---------------------> credito devolvido: %d\n",ret);
-					ret= credito(&creditoAcomulado,0,3);	//remove todo o credito
-					state_showMovie=true;					//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
-					ret_bota._ret=false;					    //volta a colocar a sinalização do botão UP a false
+					state=showMovie;												//next_state -> showMovie
+					ret= credito(&creditoAcomulado,0,0); 							//Lê o credito presente
+					printk(" ----------------> credito a ser devolvido: %d\n",ret);	//apresenta ao utilizador o credito que vai devolver
+					ret= credito(&creditoAcomulado,0,3);							//remove todo o credito
+					state_showMovie=true;											//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
+					ret_bota._ret=false;					    					//volta a colocar a sinalização do botão UP a false
 				}
 
 				if(ret_bota._1E==true || ret_bota._2E==true || ret_bota._5E==true || ret_bota._10E==true)	//Inserido dinheiro			
 				{
-					if(ret_bota._1E == true)
-					{
-						rtrn=credito(&creditoAcomulado,1,1);	//adiciona 1euro
-						printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-						ret_bota._1E=false;	
-
-					}else{ if(ret_bota._2E == true)
-							{
-								rtrn=credito(&creditoAcomulado,2,1);	//adiciona 2euro
-								printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-								ret_bota._2E=false;	
-
-							}else{ if(ret_bota._5E == true)
-									{
-										rtrn=credito(&creditoAcomulado,5,1);	//adiciona 5euro
-										printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-										ret_bota._5E=false;	
-
-									}else{if(ret_bota._10E == true)
-											{ 
-											rtrn=credito(&creditoAcomulado,10,1);	//adiciona 10euro
-											printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-											ret_bota._10E=false;	
-											}
-										}
-								} 
-						}	
-
-					state_showMovie=true;					//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
+					coinInsert();	
+					state_showMovie=true;											//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
 					
 				}//fim de if(ret_bota._1E==true || ret_bota._2E==true || ret_bota._10E==true || ret_bota._10E==true)
 
-				if(ret_bota._sel == true && creditoAcomulado>=ret_filme.price)					//compra Filme
+				if(ret_bota._sel == true && creditoAcomulado>=ret_filme.price)		//compra Filme
 				{
-					state=buyMovie;							//sALTA PARA O ESTADO 2 -> BUYmOVIE SE existir credito sufucinete
-
-					state_buyMovie=true;					//permite que as informações apareçam no ecrã quando iniciar o ESTADO 2					
-
-					ret_bota._sel=false;					//Coloca a flag do Botão novamente a false
+					state=buyMovie;													//sALTA PARA O ESTADO 2 -> BUYmOVIE SE existir credito sufucinete
+					state_buyMovie=true;											//permite que as informações apareçam no ecrã quando iniciar o ESTADO 2					
+					ret_bota._sel=false;											//Coloca a flag do Botão novamente a false
 				}
 
 				if(ret_bota._sel == true && creditoAcomulado<ret_filme.price)
 				{
-					state=notByMovie;							//sALTA PARA O ESTADO 3 -> notByMovie Se não existir credito suficiente
-					
-					state_notByMovie=true;						//permite que as informações seja escrita no ecrã quando iniciar o Estado 3
-
-					ret_bota._sel=false;						//reset a flag do botão Select (false)
+					state=notByMovie;												//sALTA PARA O ESTADO 3 -> notByMovie Se não existir credito suficiente
+					state_notByMovie=true;											//permite que as informações seja escrita no ecrã quando iniciar o Estado 3
+					ret_bota._sel=false;											//reset a flag do botão Select (false)
 
 				}
 			break;
@@ -153,14 +125,14 @@ void initStateMachine(void)
 							/* ###### ACTIVIDADES DESTE ESTADO ####### */
 					if(state_buyMovie==true)
 					{
-						ret_filme = showFilme(currentMovie); 			//mostra o filme selecionado
+						ret_filme = showFilme(currentMovie); 						//mostra o filme selecionado
 						printk("O fime: %s foi Comprado\n",ret_filme.nomeFilme);
 					
-						rtrn=credito(&creditoAcomulado,0,0); 			//Mostra o crédito atual
+						rtrn=credito(&creditoAcomulado,0,0); 						//Mostra o crédito atual
 						rtrn=credito(&creditoAcomulado,ret_filme.price,2);			//Desconta o preço do filme ao credito e devolve		
-						printk("O credito acolmulado e: %d \n", rtrn);	//mostra o credito acomulado
+						printk("O credito acolmulado e: %d \n", rtrn);				//mostra o credito acomulado
 					
-						state_showMovie=false;							//Até sair deste estado não está sempre a repetir or printK
+						state_showMovie=false;										//Até sair deste estado para não estar sempre a repetir or printK
 						state_buyMovie=false;
 						state_notByMovie=true;
 					}
@@ -170,43 +142,18 @@ void initStateMachine(void)
 				    /*########## CONDIÇOES/EVENTOS para SALTAR de estado ################*/
 					if(ret_bota._ret == true)
 					{
-						state=showMovie;		/*Salta para o Estado n1 -> showMovei*/
-						state_showMovie=true;	/*permite que se escreva novamente as informações do filme atual */
-						ret_bota._ret=false;	/*manda a flag de sinalização do estado a baixo*/	
+						state=showMovie;											/*Salta para o Estado n1 -> showMovei*/
+						state_showMovie=true;										/*permite que se escreva novamente as informações do filme atual */
+						ret_bota._ret=false;										/*manda a flag de sinalização do estado a baixo*/	
 					}
 
 					if(ret_bota._1E==true || ret_bota._2E==true || ret_bota._5E==true || ret_bota._10E==true)	//Inserido dinheiro			
 					{
-						state=showMovie;								//salta para o primeiro estado ->showMovie
-						if(ret_bota._1E == true)						//actualiza o credito mediante o dinheiro colocado
-						{
-							rtrn=credito(&creditoAcomulado,1,1);	//adiciona 1euro
-							printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-							ret_bota._1E=false;	
+						state=showMovie;											//salta para o primeiro estado ->showMovie
+						
+						coinInsert();	
 
-						}else{ if(ret_bota._2E == true)
-								{
-									rtrn=credito(&creditoAcomulado,2,1);	//adiciona 2euro
-									printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-									ret_bota._2E=false;	
-
-								}else{ if(ret_bota._5E == true)
-										{
-											rtrn=credito(&creditoAcomulado,5,1);	//adiciona 5euro
-											printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-											ret_bota._5E=false;	
-
-										}else{if(ret_bota._10E == true)
-												{ 
-												rtrn=credito(&creditoAcomulado,10,1);	//adiciona 10euro
-												printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-												ret_bota._10E=false;	
-												}
-											}
-									} 
-							}	
-
-						state_showMovie=true;					//permite escrever novamente as infoirmaçoões do filme atual e do credito no state_showMovie
+						state_showMovie=true;										//permite escrever novamente as infoirmaçoões do filme atual e do credito no state_showMovie
 						
 					}//fim de if(ret_bota._1E==true || ret_bota._2E==true || ret_bota._10E==true || ret_bota._10E==true)
 
@@ -218,11 +165,11 @@ void initStateMachine(void)
 							/* ###### ACTIVIDADES DESTE ESTADO ####### */
 					if(state_notByMovie==true)
 					{
-						ret_filme = showFilme(currentMovie); 			//mostra o filme selecionado
+						ret_filme = showFilme(currentMovie); 						//mostra o filme selecionado
 						printk("O fime: %s NÂO FOI Comprado\n",ret_filme.nomeFilme);
 					
-						rtrn=credito(&creditoAcomulado,0,0); 			//Mostra o crédito atual
-						printk("O credito acolmulado e: %d \n", rtrn);	//mostra o credito acomulado
+						rtrn=credito(&creditoAcomulado,0,0); 						//Mostra o crédito atual
+						printk("O credito acolmulado e: %d \n", rtrn);				//mostra o credito acomulado
 					
 					
 					state_showMovie=true;
@@ -234,92 +181,96 @@ void initStateMachine(void)
 				    /*########## CONDIÇOES/EVENTOS para SALTAR de estado ################*/
 					if(ret_bota._ret == true)
 					{
-						state=showMovie;		/*Salta para o Estado n1 -> showMovei*/
-						state_showMovie=true;	/*permite que se escreva novamente as informações do filme atual */
-						ret_bota._ret=false;	/*manda a flag de sinalização do estado a baixo*/	
+						state=showMovie;											/*Salta para o Estado n1 -> showMovei*/
+						state_showMovie=true;										/*permite que se escreva novamente as informações do filme atual */
+						ret_bota._ret=false;										/*manda a flag de sinalização do estado a baixo*/	
 					}
 
 					if(ret_bota._1E==true || ret_bota._2E==true || ret_bota._5E==true || ret_bota._10E==true)	//Inserido dinheiro			
 					{
-						state=showMovie;								//salta para o primeiro estado ->showMovie
-						if(ret_bota._1E == true)						//actualiza o credito mediante o dinheiro colocado
-						{
-							rtrn=credito(&creditoAcomulado,1,1);	//adiciona 1euro
-							printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-							ret_bota._1E=false;	
+						state=showMovie;											//salta para o primeiro estado ->showMovie
 
-						}else{ if(ret_bota._2E == true)
-								{
-									rtrn=credito(&creditoAcomulado,2,1);	//adiciona 2euro
-									printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-									ret_bota._2E=false;	
+						coinInsert();	
 
-								}else{ if(ret_bota._5E == true)
-										{
-											rtrn=credito(&creditoAcomulado,5,1);	//adiciona 5euro
-											printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-											ret_bota._5E=false;	
-
-										}else{if(ret_bota._10E == true)
-												{ 
-												rtrn=credito(&creditoAcomulado,10,1);	//adiciona 10euro
-												printk("$$ O seu credito atual e de: %d EURO \n", rtrn);
-												ret_bota._10E=false;	
-												}
-											}
-									} 
-							}	
-
-						state_showMovie=true;					//permite escrever novamente as infoirmaçoões do filme atual e do credito no state_showMovie
+						state_showMovie=true;										//permite escrever novamente as infoirmaçoões do filme atual e do credito no state_showMovie
 						
 					}//fim de if(ret_bota._1E==true || ret_bota._2E==true || ret_bota._10E==true || ret_bota._10E==true)
 
 
 
-				/*condiÃ§Ãµe/eventos para saltar de estado*/
-			break;
+					break;
 
 
 			default:
-				/*nÃ£o existem instruÃ§Ãµes de defaultiu*/
+				/*nÃ£o existem instruCOES de defaultE*/
 
 		}//fim do switch(state)
 	
-		writeBot(ret_bota);			/*atualiza todas as flag dos botoes*/	
-		k_msleep(500);				/*Tempo de refresh da Máquina de estados*/
+		writeBot(ret_bota);															/*atualiza todas as flag dos botoes*/	
+		k_msleep(REFRESH_TIME_SM_MS);																/*Tempo de refresh da Máquina de estados*/
 
 	}//fim do while(1)
 }//fim do void initStateMachine(void)
 
+
+
+/*fução que vai tratar os eventos da inserção das moedas*/
+void coinInsert(void)
+{
+	int rt=0;										//variavel local para retorno das funções	
+	if(ret_bota._1E == true)						//actualiza o credito mediante o dinheiro colocado
+	{
+		rt=credito(&creditoAcomulado,1,1);	//adiciona 1euro
+		printk("$$ O seu credito atual e de: %d EURO \n", rt);
+		ret_bota._1E=false;	
+
+	}else{ if(ret_bota._2E == true)
+			{
+				rt=credito(&creditoAcomulado,2,1);	//adiciona 2euro
+				printk("$$ O seu credito atual e de: %d EURO \n", rt);
+				ret_bota._2E=false;	
+
+			}else{ if(ret_bota._5E == true)
+					{
+						rt=credito(&creditoAcomulado,5,1);	//adiciona 5euro
+						printk("$$ O seu credito atual e de: %d EURO \n", rt);
+						ret_bota._5E=false;	
+
+					}else{if(ret_bota._10E == true)
+							{ 
+							rt=credito(&creditoAcomulado,10,1);	//adiciona 10euro
+							printk("$$ O seu credito atual e de: %d EURO \n", rt);
+							ret_bota._10E=false;	
+							}
+						}
+				} 
+		}
+							
+}
 
 /* 
  * The main function
  */
 void main(void)
 {
-	int ret;
-	
-		
+			
 	/*Inicializar os devices em MyEventes.c*/
 	initDevicesIO();
 
-
 	/*botões funciona com interrupções -> devolve apenas uma mensagem a dizer que foi clicado*/
-
 
 	/*funções que gere lista de filmes*/
 	alocListMovies();
 
 	/*escreve na lista os filmes presentes no guião do trabalho*/
 	creatListMovies();
-	
-	
 
+	/*mensagem de apresentação */
 	printk("\n\n###################################\n");
 	printk("# Máquinas de Estados inicializada #\n");
 	printk("###################################\n\n");
 
-
+	/*inicializa a máquina de estados esta vai entrar em loop infinito*/
 	initStateMachine();
 	
 
