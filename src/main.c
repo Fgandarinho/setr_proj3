@@ -61,7 +61,7 @@ void initStateMachine(void)
 				if(ret_bota._up==true)									// verificar o botão_up se foi pressionado
 				{
 					state=showMovie;									//next_state -> showMovie
-					if(currentMovie <= NUM_MAX_FILMES-1)				/*-1 pois o array conta com o valor 0-4 -> NUM_MAX_FILMES=5*/	
+					if(currentMovie < NUM_MAX_FILMES-1)				/*-1 pois o array conta com o valor 0-4 -> NUM_MAX_FILMES=5*/	
 					{
 						currentMovie++;									/*incrementa para o proximo filme*/
 					}else
