@@ -61,7 +61,7 @@ void initStateMachine(void)
 				if(ret_bota._up==true)									// verificar o botão_up se foi pressionado
 				{
 					state=showMovie;									//next_state -> showMovie
-					if(currentMovie < NUM_MAX_FILMES-1)				/*-1 pois o array conta com o valor 0-4 -> NUM_MAX_FILMES=5*/	
+					if(currentMovie <= NUM_MAX_FILMES-1)				/*-1 pois o array conta com o valor 0-4 -> NUM_MAX_FILMES=5*/	
 					{
 						currentMovie++;									/*incrementa para o proximo filme*/
 					}else
@@ -90,7 +90,7 @@ void initStateMachine(void)
 					int ret;
 					state=showMovie;												//next_state -> showMovie
 					ret= credito(&creditoAcomulado,0,0); 							//Lê o credito presente
-					printk(" ----------------> credito a ser devolvido: %d\n",ret);	//apresenta ao utilizador o credito que vai devolver
+					printk(" ---------------------> credito a ser devolvido: %d\n",ret);	//apresenta ao utilizador o credito que vai devolver
 					ret= credito(&creditoAcomulado,0,3);							//remove todo o credito
 					state_showMovie=true;											//permite escrever novamente as infoirmaçoões do filme atual no state_showMovie
 					ret_bota._ret=false;					    					//volta a colocar a sinalização do botão UP a false
