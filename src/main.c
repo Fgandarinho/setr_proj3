@@ -1,23 +1,80 @@
+/** 
+* \file main.c
+*
+* \brief Este módulo é a main do nosso programa da máquina de filmes implementada com máquina de estados.
+*
+* \author Fernando Gandarinho e Tomás Silva
+* \date 16/05/2023
+* \bug There are no bugs
+*/
+
 #include "MyEvents/MyEvents.h"
 #include "MyMovies/MyMovies.h"
 
 /* Use a "big" sleep time to reduce CPU load (button detection int activated, not polled) */
+/**
+ * \brief Tempo de sleep da máquina de estados para reduzir a carga do CPU
+*/
+
 #define SLEEP_TIME_MS   60*1000 
-#define REFRESH_TIME_SM_MS 500
 
 /**
- * Nomes dos estados da a implementaÃ§Ã£o da maquina de estado 
+ * \brief Tempo de refresh da máquina de estados
 */
+#define REFRESH_TIME_SM_MS 500
+
+/* Nomes dos estados da a implementaÃ§Ã£o da maquina de estado */
+/** \brief Estado 1 da maquina de estados
+ * Este estado representa o estado em que o utilizador escolhe o filme e adiciona o credito
+ */
 #define showMovie 1
+
+/** \brief Estado 2 da maquina de estados
+ * Este estado representa o estado em que o utilizador compra o filme
+ */
 #define buyMovie 2
+
+/** \brief Estado 3 da maquina de estados
+ * Este estado representa o estado em que o utilizador não compra o filme
+ */
+ */
 #define notByMovie 3
 
 
-
+/** \brief Definiçao da estrutura de dados para os filmes.
+ *    Esta estrutura contém os vários filmes existentes na maquina de filmes.
+ * 
+ * 	\author Fernando Gandarinho e Tomás Silva
+ * 	
+ * 	\date 16/05/2023
+ * 
+ */
 struct filme ret_filme;						/*cria uma variavel do tipo filme para retorno das funções das funções de MyMovies*/
+
+
+/** \brief Definiçao da estrutura dos botões
+ *    Esta estrutura contém os vários botões a ser utilizado no projeto
+ *
+ * 	\date 16/05/2023
+ * 
+ */
+
 struct botao ret_bota;						/*cria uma variavel do tipo botao para retrono das  funções de MyEventes*/
 
+
+/** \brief Variavel global para o credito acumulado
+ *
+ * 	\date 16/05/2023
+ * 
+ */
 static int creditoAcomulado = 0;			/*variavel que contem o credito acomulado*/		
+
+
+/** \brief Variavel global para o indice do filme atual
+ *
+ * 	\date 16/05/2023
+ * 
+ */
 static int currentMovie = 1;				/*variavel que sinaliza o indice do fime selecionado*/
 
 static bool state_showMovie= true;			/* flags usadas na maquina de estado para que no ciclo infinito o terminal não esteja sempre a printK();*/
@@ -26,9 +83,11 @@ static bool state_notByMovie= false;
 
 
 /**
- * FunÃ§Ã£o que implementa a mÃ¡quina de estados do projeto "mÃ¡quina de venda de filmes"
- * Inicialização da máquina de estados 
- * Atenção entra em ciclo infinito
+ * \brief Função que implementa a máquina de estados do projeto "máquina de venda de filmes"
+ * 
+ * \author Fernando Gandarinho e Tomás Silva
+ * \date 16/05/2023
+ * \bug There are no bugs
  * 
 */
 void initStateMachine(void)
@@ -250,6 +309,15 @@ void coinInsert(void)
 
 /* 
  * The main function
+ */
+ 
+ /**
+ * \brief Função principal do programa
+ * 
+ * \author Fernando Gandarinho e Tomás Silva
+ * \date 16/05/2023
+ * \bug There are no bugs
+ *  
  */
 void main(void)
 {

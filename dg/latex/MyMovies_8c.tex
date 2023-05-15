@@ -1,0 +1,74 @@
+\hypertarget{MyMovies_8c}{}\doxysection{/home/tomas/\+Desktop/\+SETR/projeto\+\_\+3/setr\+\_\+proj3/src/\+My\+Movies/\+My\+Movies.c File Reference}
+\label{MyMovies_8c}\index{/home/tomas/Desktop/SETR/projeto\_3/setr\_proj3/src/MyMovies/MyMovies.c@{/home/tomas/Desktop/SETR/projeto\_3/setr\_proj3/src/MyMovies/MyMovies.c}}
+{\ttfamily \#include \char`\"{}My\+Movies.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$zephyr/kernel.\+h$>$}\newline
+Include dependency graph for My\+Movies.\+c\+:
+% FIG 0
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{MyMovies_8c_accb951dde561eb5d2ef624d319a91892}{aloc\+List\+Movies}} ()
+\begin{DoxyCompactList}\small\item\em aloca espaço necessário para armazenar a lista dos filmes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{MyMovies_8c_aca27370170ce218d1484212950d4ec93}{creat\+List\+Movies}} ()
+\begin{DoxyCompactList}\small\item\em cria/insere os filmes de forma default seguindo o guião. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfilme}{filme}} \mbox{\hyperlink{MyMovies_8c_a59dbe19e6d1959398a93d5c48cd5de66}{show\+Filme}} (int num\+\_\+filme)
+\begin{DoxyCompactList}\small\item\em Função para devolver as informações do filme selecionado. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structfilme}{filme}} \mbox{\hyperlink{MyMovies_8c_a9be08521db787f8d05d1fb2b4e5b9c1c}{tab\+\_\+\+Filmes}} \mbox{[}\mbox{\hyperlink{MyMovies_8h_a3617f54f9217bec9bced4cf86432ec4b}{NUM\+\_\+\+MAX\+\_\+\+FILMES}}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{MyMovies_8c_accb951dde561eb5d2ef624d319a91892}\label{MyMovies_8c_accb951dde561eb5d2ef624d319a91892}} 
+\index{MyMovies.c@{MyMovies.c}!alocListMovies@{alocListMovies}}
+\index{alocListMovies@{alocListMovies}!MyMovies.c@{MyMovies.c}}
+\doxysubsubsection{\texorpdfstring{alocListMovies()}{alocListMovies()}}
+{\footnotesize\ttfamily void aloc\+List\+Movies (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+aloca espaço necessário para armazenar a lista dos filmes. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\mbox{\Hypertarget{MyMovies_8c_aca27370170ce218d1484212950d4ec93}\label{MyMovies_8c_aca27370170ce218d1484212950d4ec93}} 
+\index{MyMovies.c@{MyMovies.c}!creatListMovies@{creatListMovies}}
+\index{creatListMovies@{creatListMovies}!MyMovies.c@{MyMovies.c}}
+\doxysubsubsection{\texorpdfstring{creatListMovies()}{creatListMovies()}}
+{\footnotesize\ttfamily void creat\+List\+Movies (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+cria/insere os filmes de forma default seguindo o guião. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\mbox{\Hypertarget{MyMovies_8c_a59dbe19e6d1959398a93d5c48cd5de66}\label{MyMovies_8c_a59dbe19e6d1959398a93d5c48cd5de66}} 
+\index{MyMovies.c@{MyMovies.c}!showFilme@{showFilme}}
+\index{showFilme@{showFilme}!MyMovies.c@{MyMovies.c}}
+\doxysubsubsection{\texorpdfstring{showFilme()}{showFilme()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structfilme}{filme}} show\+Filme (\begin{DoxyParamCaption}\item[{int}]{num\+\_\+filme }\end{DoxyParamCaption})}
+
+
+
+Função para devolver as informações do filme selecionado. 
+
+Função de devolve as informações do filme parametro de saida é do tipo estrutura de filme parametro de entrada indici do filme a procurar ponteiro para a estrutura da lista de filmes Esta Função faz a interface/comunicaçao entre o modulo \mbox{\hyperlink{main_8c}{main.\+c}} e \mbox{\hyperlink{MyMovies_8c}{My\+Movies.\+c}} 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{MyMovies_8c_a9be08521db787f8d05d1fb2b4e5b9c1c}\label{MyMovies_8c_a9be08521db787f8d05d1fb2b4e5b9c1c}} 
+\index{MyMovies.c@{MyMovies.c}!tab\_Filmes@{tab\_Filmes}}
+\index{tab\_Filmes@{tab\_Filmes}!MyMovies.c@{MyMovies.c}}
+\doxysubsubsection{\texorpdfstring{tab\_Filmes}{tab\_Filmes}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structfilme}{filme}} tab\+\_\+\+Filmes\mbox{[}\mbox{\hyperlink{MyMovies_8h_a3617f54f9217bec9bced4cf86432ec4b}{NUM\+\_\+\+MAX\+\_\+\+FILMES}}\mbox{]}}
+

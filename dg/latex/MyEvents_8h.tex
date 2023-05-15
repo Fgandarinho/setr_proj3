@@ -1,0 +1,207 @@
+\hypertarget{MyEvents_8h}{}\doxysection{/home/tomas/\+Desktop/\+SETR/projeto\+\_\+3/setr\+\_\+proj3/src/\+My\+Events/\+My\+Events.h File Reference}
+\label{MyEvents_8h}\index{/home/tomas/Desktop/SETR/projeto\_3/setr\_proj3/src/MyEvents/MyEvents.h@{/home/tomas/Desktop/SETR/projeto\_3/setr\_proj3/src/MyEvents/MyEvents.h}}
+
+
+Este ficheiro pretende definir as funçoes de criação e gestao dos eventos/interrupções.  
+
+
+{\ttfamily \#include $<$zephyr/kernel.\+h$>$}\newline
+{\ttfamily \#include $<$zephyr/device.\+h$>$}\newline
+{\ttfamily \#include $<$zephyr/devicetree.\+h$>$}\newline
+{\ttfamily \#include $<$zephyr/drivers/gpio.\+h$>$}\newline
+{\ttfamily \#include $<$zephyr/sys/printk.\+h$>$}\newline
+Include dependency graph for My\+Events.\+h\+:
+% FIG 0
+This graph shows which files directly or indirectly include this file\+:
+% FIG 1
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structbotao}{botao}}
+\begin{DoxyCompactList}\small\item\em Definiçao da estrutura dos botões Esta estrutura contém os vários botões a ser utilizado no projeto. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{MyEvents_8h_a840217aee9bd887463dad1b56defb051}{SLEEP\+\_\+\+TIME\+\_\+\+MS}}~60$\ast$1000
+\item 
+\#define \mbox{\hyperlink{MyEvents_8h_a318aa17e5d40e2132d2c7f6269ce7f51}{LED1\+\_\+\+PIN}}~13
+\item 
+\#define \mbox{\hyperlink{MyEvents_8h_abf6f155bdb9da42f7e68cc1e78262806}{GPIO0\+\_\+\+NODE}}~DT\+\_\+\+NODELABEL(gpio0)
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{MyEvents_8h_ab4b2c1747e66383dfb0b5679887e1854}{button\+\_\+pressed}} (const struct device $\ast$dev, struct gpio\+\_\+callback $\ast$cb, uint32\+\_\+t pins)
+\begin{DoxyCompactList}\small\item\em Intancia a interrupção quando o botão é pressionado. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{MyEvents_8h_acda38a3f7da510e46246342a2c7f1a4c}{init\+Devices\+IO}} (void)
+\begin{DoxyCompactList}\small\item\em Inicializa os dispositivos de IO. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{MyEvents_8h_a01247a9ddc08b68804c94a3b9163d8fd}{test\+Leds}} (void)
+\begin{DoxyCompactList}\small\item\em Função para o LED alternar o seu valor a cada interrupção. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{MyEvents_8h_a7248f7d5d1a3b34e7988a21b23680e87}{credito}} (int $\ast$crd\+\_\+acomulado, int in\+\_\+crd, int add\+\_\+sub)
+\begin{DoxyCompactList}\small\item\em Função que atualiza o crédito disponivel. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structbotao}{botao}} \mbox{\hyperlink{MyEvents_8h_ab07beb670607eb8ce339220143f6d3ab}{read\+Bot}} ()
+\begin{DoxyCompactList}\small\item\em Função que lê nao estado de todas as flags dos botões. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{MyEvents_8h_aaffa4be579b0036d7f3a550135be39b3}{write\+Bot}} (struct \mbox{\hyperlink{structbotao}{botao}} bt)
+\begin{DoxyCompactList}\small\item\em Função que atualiza a flag de um botão. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Este ficheiro pretende definir as funçoes de criação e gestao dos eventos/interrupções. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000004}{Bug}}]There are no bugs \end{DoxyRefDesc}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{MyEvents_8h_abf6f155bdb9da42f7e68cc1e78262806}\label{MyEvents_8h_abf6f155bdb9da42f7e68cc1e78262806}} 
+\index{MyEvents.h@{MyEvents.h}!GPIO0\_NODE@{GPIO0\_NODE}}
+\index{GPIO0\_NODE@{GPIO0\_NODE}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{GPIO0\_NODE}{GPIO0\_NODE}}
+{\footnotesize\ttfamily \#define GPIO0\+\_\+\+NODE~DT\+\_\+\+NODELABEL(gpio0)}
+
+\mbox{\Hypertarget{MyEvents_8h_a318aa17e5d40e2132d2c7f6269ce7f51}\label{MyEvents_8h_a318aa17e5d40e2132d2c7f6269ce7f51}} 
+\index{MyEvents.h@{MyEvents.h}!LED1\_PIN@{LED1\_PIN}}
+\index{LED1\_PIN@{LED1\_PIN}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{LED1\_PIN}{LED1\_PIN}}
+{\footnotesize\ttfamily \#define LED1\+\_\+\+PIN~13}
+
+\mbox{\Hypertarget{MyEvents_8h_a840217aee9bd887463dad1b56defb051}\label{MyEvents_8h_a840217aee9bd887463dad1b56defb051}} 
+\index{MyEvents.h@{MyEvents.h}!SLEEP\_TIME\_MS@{SLEEP\_TIME\_MS}}
+\index{SLEEP\_TIME\_MS@{SLEEP\_TIME\_MS}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{SLEEP\_TIME\_MS}{SLEEP\_TIME\_MS}}
+{\footnotesize\ttfamily \#define SLEEP\+\_\+\+TIME\+\_\+\+MS~60$\ast$1000}
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{MyEvents_8h_ab4b2c1747e66383dfb0b5679887e1854}\label{MyEvents_8h_ab4b2c1747e66383dfb0b5679887e1854}} 
+\index{MyEvents.h@{MyEvents.h}!button\_pressed@{button\_pressed}}
+\index{button\_pressed@{button\_pressed}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{button\_pressed()}{button\_pressed()}}
+{\footnotesize\ttfamily void button\+\_\+pressed (\begin{DoxyParamCaption}\item[{const struct device $\ast$}]{dev,  }\item[{struct gpio\+\_\+callback $\ast$}]{cb,  }\item[{uint32\+\_\+t}]{pins }\end{DoxyParamCaption})}
+
+
+
+Intancia a interrupção quando o botão é pressionado. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em $\ast$dev} & device pointer \\
+\hline
+\mbox{\texttt{ in}}  & {\em $\ast$cb} & variable of type static struct gpio\+\_\+callback \\
+\hline
+\mbox{\texttt{ in}}  & {\em pins} & Pin number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\mbox{\Hypertarget{MyEvents_8h_a7248f7d5d1a3b34e7988a21b23680e87}\label{MyEvents_8h_a7248f7d5d1a3b34e7988a21b23680e87}} 
+\index{MyEvents.h@{MyEvents.h}!credito@{credito}}
+\index{credito@{credito}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{credito()}{credito()}}
+{\footnotesize\ttfamily int credito (\begin{DoxyParamCaption}\item[{int $\ast$}]{crd\+\_\+acomulado,  }\item[{int}]{in\+\_\+crd,  }\item[{int}]{add\+\_\+sub }\end{DoxyParamCaption})}
+
+
+
+Função que atualiza o crédito disponivel. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em $\ast$crd\+\_\+acomulado} & Ponteiro para a zona de memoria onde está guardada o plafond \\
+\hline
+\mbox{\texttt{ in}}  & {\em in\+\_\+crd} & Crédito introduzido (1€;2€;5€;10) \\
+\hline
+\mbox{\texttt{ in}}  & {\em add\+\_\+sub} & Operação a realizar\+: 0-\/$>$ mostra crédito ; 1-\/$>$ Adiciona crédito(in\+\_\+crd); 2-\/$>$ subtrai\+\_\+credito(in\+\_\+crd); 3-\/$>$remove\+\_\+\+ALLcredito \\
+\hline
+\end{DoxyParams}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\mbox{\Hypertarget{MyEvents_8h_acda38a3f7da510e46246342a2c7f1a4c}\label{MyEvents_8h_acda38a3f7da510e46246342a2c7f1a4c}} 
+\index{MyEvents.h@{MyEvents.h}!initDevicesIO@{initDevicesIO}}
+\index{initDevicesIO@{initDevicesIO}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{initDevicesIO()}{initDevicesIO()}}
+{\footnotesize\ttfamily void init\+Devices\+IO (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Inicializa os dispositivos de IO. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\mbox{\Hypertarget{MyEvents_8h_ab07beb670607eb8ce339220143f6d3ab}\label{MyEvents_8h_ab07beb670607eb8ce339220143f6d3ab}} 
+\index{MyEvents.h@{MyEvents.h}!readBot@{readBot}}
+\index{readBot@{readBot}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{readBot()}{readBot()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structbotao}{botao}} read\+Bot (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Função que lê nao estado de todas as flags dos botões. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em ret\+\_\+botoes,retorna} & a estrutura botao\\
+\hline
+\end{DoxyParams}
+\begin{DoxyDate}{Date}
+16/05/2023
+\end{DoxyDate}
+Lê a estruura loca das flags dos botes Esta função faz a atualização dos valores do Events.\+c para fora(\mbox{\hyperlink{main_8c}{main.\+c}}) \mbox{\Hypertarget{MyEvents_8h_a01247a9ddc08b68804c94a3b9163d8fd}\label{MyEvents_8h_a01247a9ddc08b68804c94a3b9163d8fd}} 
+\index{MyEvents.h@{MyEvents.h}!testLeds@{testLeds}}
+\index{testLeds@{testLeds}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{testLeds()}{testLeds()}}
+{\footnotesize\ttfamily void test\+Leds (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Função para o LED alternar o seu valor a cada interrupção. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\mbox{\Hypertarget{MyEvents_8h_aaffa4be579b0036d7f3a550135be39b3}\label{MyEvents_8h_aaffa4be579b0036d7f3a550135be39b3}} 
+\index{MyEvents.h@{MyEvents.h}!writeBot@{writeBot}}
+\index{writeBot@{writeBot}!MyEvents.h@{MyEvents.h}}
+\doxysubsubsection{\texorpdfstring{writeBot()}{writeBot()}}
+{\footnotesize\ttfamily void write\+Bot (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structbotao}{botao}}}]{bt }\end{DoxyParamCaption})}
+
+
+
+Função que atualiza a flag de um botão. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva 
+\end{DoxyAuthor}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em bt} & estrutura botao\\
+\hline
+\end{DoxyParams}
+\begin{DoxyDate}{Date}
+16/05/2023
+\end{DoxyDate}
+escreve e atuliza a estrutura local com as flags de todos os botoes Esta função faz a atualização dos valores do \mbox{\hyperlink{main_8c}{main.\+c}} para dentro(\mbox{\hyperlink{MyEvents_8c}{My\+Events.\+c}}) 

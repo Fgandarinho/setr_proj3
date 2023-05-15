@@ -1,0 +1,183 @@
+\hypertarget{main_8c}{}\doxysection{/home/tomas/\+Desktop/\+SETR/projeto\+\_\+3/setr\+\_\+proj3/src/main.c File Reference}
+\label{main_8c}\index{/home/tomas/Desktop/SETR/projeto\_3/setr\_proj3/src/main.c@{/home/tomas/Desktop/SETR/projeto\_3/setr\_proj3/src/main.c}}
+
+
+Este módulo é a main do nosso programa da máquina de filmes implementada com máquina de estados.  
+
+
+{\ttfamily \#include \char`\"{}My\+Events/\+My\+Events.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}My\+Movies/\+My\+Movies.\+h\char`\"{}}\newline
+Include dependency graph for main.\+c\+:
+% FIG 0
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8c_a840217aee9bd887463dad1b56defb051}{SLEEP\+\_\+\+TIME\+\_\+\+MS}}~60$\ast$1000
+\begin{DoxyCompactList}\small\item\em Tempo de sleep da máquina de estados para reduzir a carga do CPU. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8c_a02a928407939b37e6762c1798b767a17}{REFRESH\+\_\+\+TIME\+\_\+\+SM\+\_\+\+MS}}~500
+\begin{DoxyCompactList}\small\item\em Tempo de refresh da máquina de estados. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8c_ab279a3186a2de4e3f1ac6165dbe2238c}{show\+Movie}}~1
+\begin{DoxyCompactList}\small\item\em Estado 1 da maquina de estados Este estado representa o estado em que o utilizador escolhe o filme e adiciona o credito. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8c_a22cba47fd450405764d57d3d7e1f0f3f}{buy\+Movie}}~2
+\begin{DoxyCompactList}\small\item\em Estado 2 da maquina de estados Este estado representa o estado em que o utilizador compra o filme. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{main_8c_aeca1502b1c61d9bb6308f5656e31ce30}{not\+By\+Movie}}~3
+\begin{DoxyCompactList}\small\item\em Estado 3 da maquina de estados Este estado representa o estado em que o utilizador não compra o filme. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_ae3193cfcdfecbf55af42586e4c12a6e7}{init\+State\+Machine}} (void)
+\begin{DoxyCompactList}\small\item\em Função que implementa a máquina de estados do projeto \char`\"{}máquina de venda de filmes\char`\"{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_a5f89c62bad09b87e551eb7c9080b8647}{coin\+Insert}} (void)
+\item 
+void \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}} (void)
+\begin{DoxyCompactList}\small\item\em Função principal do programa. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structfilme}{filme}} \mbox{\hyperlink{main_8c_ab3b788014ab64189e74692b1b15b83d7}{ret\+\_\+filme}}
+\begin{DoxyCompactList}\small\item\em Definiçao da estrutura de dados para os filmes. Esta estrutura contém os vários filmes existentes na maquina de filmes. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structbotao}{botao}} \mbox{\hyperlink{main_8c_a646dc124cb04a28abeda0df3c9b1d937}{ret\+\_\+bota}}
+\begin{DoxyCompactList}\small\item\em Definiçao da estrutura dos botões Esta estrutura contém os vários botões a ser utilizado no projeto. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Este módulo é a main do nosso programa da máquina de filmes implementada com máquina de estados. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000001}{Bug}}]There are no bugs \end{DoxyRefDesc}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{main_8c_a22cba47fd450405764d57d3d7e1f0f3f}\label{main_8c_a22cba47fd450405764d57d3d7e1f0f3f}} 
+\index{main.c@{main.c}!buyMovie@{buyMovie}}
+\index{buyMovie@{buyMovie}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{buyMovie}{buyMovie}}
+{\footnotesize\ttfamily \#define buy\+Movie~2}
+
+
+
+Estado 2 da maquina de estados Este estado representa o estado em que o utilizador compra o filme. 
+
+\mbox{\Hypertarget{main_8c_aeca1502b1c61d9bb6308f5656e31ce30}\label{main_8c_aeca1502b1c61d9bb6308f5656e31ce30}} 
+\index{main.c@{main.c}!notByMovie@{notByMovie}}
+\index{notByMovie@{notByMovie}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{notByMovie}{notByMovie}}
+{\footnotesize\ttfamily \#define not\+By\+Movie~3}
+
+
+
+Estado 3 da maquina de estados Este estado representa o estado em que o utilizador não compra o filme. 
+
+\mbox{\Hypertarget{main_8c_a02a928407939b37e6762c1798b767a17}\label{main_8c_a02a928407939b37e6762c1798b767a17}} 
+\index{main.c@{main.c}!REFRESH\_TIME\_SM\_MS@{REFRESH\_TIME\_SM\_MS}}
+\index{REFRESH\_TIME\_SM\_MS@{REFRESH\_TIME\_SM\_MS}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{REFRESH\_TIME\_SM\_MS}{REFRESH\_TIME\_SM\_MS}}
+{\footnotesize\ttfamily \#define REFRESH\+\_\+\+TIME\+\_\+\+SM\+\_\+\+MS~500}
+
+
+
+Tempo de refresh da máquina de estados. 
+
+\mbox{\Hypertarget{main_8c_ab279a3186a2de4e3f1ac6165dbe2238c}\label{main_8c_ab279a3186a2de4e3f1ac6165dbe2238c}} 
+\index{main.c@{main.c}!showMovie@{showMovie}}
+\index{showMovie@{showMovie}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{showMovie}{showMovie}}
+{\footnotesize\ttfamily \#define show\+Movie~1}
+
+
+
+Estado 1 da maquina de estados Este estado representa o estado em que o utilizador escolhe o filme e adiciona o credito. 
+
+\mbox{\Hypertarget{main_8c_a840217aee9bd887463dad1b56defb051}\label{main_8c_a840217aee9bd887463dad1b56defb051}} 
+\index{main.c@{main.c}!SLEEP\_TIME\_MS@{SLEEP\_TIME\_MS}}
+\index{SLEEP\_TIME\_MS@{SLEEP\_TIME\_MS}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{SLEEP\_TIME\_MS}{SLEEP\_TIME\_MS}}
+{\footnotesize\ttfamily \#define SLEEP\+\_\+\+TIME\+\_\+\+MS~60$\ast$1000}
+
+
+
+Tempo de sleep da máquina de estados para reduzir a carga do CPU. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8c_a5f89c62bad09b87e551eb7c9080b8647}\label{main_8c_a5f89c62bad09b87e551eb7c9080b8647}} 
+\index{main.c@{main.c}!coinInsert@{coinInsert}}
+\index{coinInsert@{coinInsert}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{coinInsert()}{coinInsert()}}
+{\footnotesize\ttfamily void coin\+Insert (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{main_8c_ae3193cfcdfecbf55af42586e4c12a6e7}\label{main_8c_ae3193cfcdfecbf55af42586e4c12a6e7}} 
+\index{main.c@{main.c}!initStateMachine@{initStateMachine}}
+\index{initStateMachine@{initStateMachine}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{initStateMachine()}{initStateMachine()}}
+{\footnotesize\ttfamily void init\+State\+Machine (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Função que implementa a máquina de estados do projeto \char`\"{}máquina de venda de filmes\char`\"{}. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000002}{Bug}}]There are no bugs\end{DoxyRefDesc}
+\mbox{\Hypertarget{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}\label{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily void main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Função principal do programa. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000003}{Bug}}]There are no bugs\end{DoxyRefDesc}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{main_8c_a646dc124cb04a28abeda0df3c9b1d937}\label{main_8c_a646dc124cb04a28abeda0df3c9b1d937}} 
+\index{main.c@{main.c}!ret\_bota@{ret\_bota}}
+\index{ret\_bota@{ret\_bota}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{ret\_bota}{ret\_bota}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structbotao}{botao}} ret\+\_\+bota}
+
+
+
+Definiçao da estrutura dos botões Esta estrutura contém os vários botões a ser utilizado no projeto. 
+
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
+\mbox{\Hypertarget{main_8c_ab3b788014ab64189e74692b1b15b83d7}\label{main_8c_ab3b788014ab64189e74692b1b15b83d7}} 
+\index{main.c@{main.c}!ret\_filme@{ret\_filme}}
+\index{ret\_filme@{ret\_filme}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{ret\_filme}{ret\_filme}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structfilme}{filme}} ret\+\_\+filme}
+
+
+
+Definiçao da estrutura de dados para os filmes. Esta estrutura contém os vários filmes existentes na maquina de filmes. 
+
+\begin{DoxyAuthor}{Author}
+Fernando Gandarinho e Tomás Silva
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+16/05/2023 
+\end{DoxyDate}
